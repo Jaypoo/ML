@@ -49,7 +49,8 @@ class ConvNet: # conv - relu - pool - affine - relu - affine - softmax
         return self.last_layer.forward(y, t)
 
     def accuracy(self, x, t, batch_size=100):
-        if t.ndim != 1 : t = np.argmax(t, axis=1)
+        if t.ndim != 1 :
+            t = np.argmax(t, axis=1)
         
         acc = 0.0
         
@@ -58,7 +59,7 @@ class ConvNet: # conv - relu - pool - affine - relu - affine - softmax
             tt = t[i*batch_size:(i+1)*batch_size]
             y = self.predict(tx)
             y = np.argmax(y, axis=1)
-            acc += np.sum(y == tt) 
+            acc += np.sum(y == tt)
         
         return acc / x.shape[0]
 

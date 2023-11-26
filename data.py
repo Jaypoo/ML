@@ -2,7 +2,7 @@ import os
 import cv2
 import numpy as np
 
-def load_data():
+def load_data(img_pixel=128):
     data_dir = './Dataset' # 데이터셋 폴더 위치
 
     # 클래스 레이블 정의
@@ -26,7 +26,7 @@ def load_data():
             img = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)  # 흑백 이미지
 
             # 이미지 크기를 모델에 맞게 조절
-            img = cv2.resize(img, (128, 128))
+            img = cv2.resize(img, (img_pixel, img_pixel))
 
             # 이미지를 0에서 1 사이의 값으로 정규화
             img = img.astype(np.float32) / 255.0
@@ -53,8 +53,8 @@ def load_data():
 
 
     # 4차원 데이터로 변환
-    x_train = x_train.reshape(-1, 1, 128, 128)
-    x_test = x_test.reshape(-1, 1, 128, 128)
-    x_val = x_val.reshape(-1, 1, 128, 128)
+    x_train = x_train.reshape(-1, 1, img_pixel, img_pixel)
+    x_test = x_test.reshape(-1, 1, img_pixel, img_pixel)
+    x_val = x_val.reshape(-1, 1, img_pixel, img_pixel)
 
     return (x_train, t_train), (x_test, t_test) , (x_val, t_val)

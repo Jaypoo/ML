@@ -1,10 +1,11 @@
 import numpy as np
 from optimizer import *
+from matplotlib import pyplot as plt
 
 class Trainer:
     def __init__(self, network, x_train, t_train, x_test, t_test, x_val, t_val,
                  epochs=20, mini_batch_size=100,
-                 optimizer='SGD', optimizer_param={'lr':0.01}, 
+                 optimizer='SGD', optimizer_param={'lr':0.05},
                  evaluate_sample_num_per_epoch=None, verbose=True):
         self.network = network
         self.verbose = verbose
@@ -70,4 +71,6 @@ class Trainer:
         if self.verbose:
             print("=============== Final Test Accuracy ===============")
             print("test acc:" + str(test_acc))
+
+
 
