@@ -2,7 +2,9 @@ import os
 import cv2
 import numpy as np
 
-def load_data(data_dir='./Dataset'):
+def load_data():
+    data_dir = './Dataset' # 데이터셋 폴더 위치
+
     # 클래스 레이블 정의
     class_labels = ['Mild_Demented', 'Non_Demented', 'Moderate_Demented', 'Very_Mild_Demented']
 
@@ -43,12 +45,16 @@ def load_data(data_dir='./Dataset'):
     data = data[indices]
     labels = labels[indices]
 
-    split_idx = int(0.8 * len(data)) # 8:2 로 분할
-    x_train, x_test = data[:split_idx], data[split_idx:]
-    t_train, t_test = labels[:split_idx], labels[split_idx:]
+    # 6:2:2 로 분할
+    split_idx1 = int(0.6 * len(data))
+    split_idx2 = int(0.8 * len(data))
+    x_train, x_test, x_val = data[:split_idx1], data[split_idx1:split_idx2], data[split_idx2:]
+    t_train, t_test, t_val = labels[:split_idx1], labels[split_idx1:split_idx2], labels[split_idx2:]
+
 
     # 4차원 데이터로 변환
     x_train = x_train.reshape(-1, 1, 128, 128)
     x_test = x_test.reshape(-1, 1, 128, 128)
+    x_val = x_val.reshape(-1, 1, 128, 128)
 
-    return (x_train, t_train), (x_test, t_test)
+    return (x_train, t_train), (x_test, t_test) , (x_val, t_val)
