@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 class Trainer:
     def __init__(self, network, x_train, t_train, x_test, t_test, x_val, t_val,
                  epochs=20, mini_batch_size=100,
-                 optimizer='SGD', optimizer_param={'lr':0.05},
+                 optimizer='SGD', optimizer_param={'lr':0.01},
                  evaluate_sample_num_per_epoch=None, verbose=True):
         self.network = network
         self.verbose = verbose
@@ -41,11 +41,11 @@ class Trainer:
         grads = self.network.gradient(x_batch, t_batch)
         self.optimizer.update(self.network.params, grads)
         
-        loss = self.network.loss(x_batch, t_batch)
-        self.train_loss_list.append(loss)
-        
         if self.current_iter % self.iter_per_epoch == 0:
             self.current_epoch += 1
+
+            loss = self.network.loss(x_batch, t_batch)
+            self.train_loss_list.append(loss)
             
             x_train_sample, t_train_sample = self.x_train, self.t_train
             x_val_sample, t_val_sample = self.x_val, self.t_val
